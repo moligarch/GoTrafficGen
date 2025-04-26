@@ -7,11 +7,13 @@ all: init windows linux
 init:
 	@echo "Initializing project structure..."
 	@for proto in $(PROTOCOLS); do \
-		mkdir -p bin/$$proto; \
+		mkdir -p bin; \
 		mkdir -p internal/$$proto; \
 		mkdir -p cmd/$$proto; \
 	done
 	@echo "Project structure initialized."
+	@test -f go.mod || go mod init GoTrafficGen
+	go mod tidy
 
 windows:
 	@for proto in $(PROTOCOLS); do \
@@ -25,5 +27,5 @@ linux:
 
 build:
 	@echo "Building for $(OS) protocol $(PROTO)..."
-	GOOS=$(OS) GOARCH=amd64 go build -o bin/$(PROTO)/$(PROTO)tg$(if $(filter windows,$(OS)),.exe,) ./cmd/$(PROTO)
+	GOOS=$(OS) GOARCH=amd64 go build -o bin/$(PROTO)tg$(if $(filter windows,$(OS)),.exe,) ./cmd/$(PROTO)
 	@echo "Build complete for $(OS) protocol $(PROTO)."
