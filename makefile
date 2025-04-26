@@ -27,5 +27,5 @@ linux:
 
 build:
 	@echo "Building for $(OS) protocol $(PROTO)..."
-	GOOS=$(OS) GOARCH=amd64 go build -o bin/$(PROTO)tg$(if $(filter windows,$(OS)),.exe,) ./cmd/$(PROTO)
+	GOOS=$(OS) GOARCH=amd64 go build -o bin/$(OS)/$(PROTO)tg$(if $(filter windows,$(OS)),.exe,) ./cmd/$(PROTO)
 	@echo "Build complete for $(OS) protocol $(PROTO)."
